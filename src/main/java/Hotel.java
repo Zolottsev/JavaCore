@@ -17,6 +17,8 @@ public class Hotel {
         for (int i = 1; i < 101; i++)
             roomMap.put(i, new Room(i, getRandomType(), TRUE));
 
+        System.out.println(roomMap.get(1));
+
         getBookingStatus(roomMap);
         bookingRoom(roomMap);
         getBookingStatus(roomMap);
@@ -43,12 +45,23 @@ public class Hotel {
         public Room(Integer numberOfRoom, Type type, Boolean isFree) {
             this.numberOfRoom = numberOfRoom;
             this.isFree = isFree;
+            this.roomType=type;
+        }
+
+        @Override
+        public String toString() {
+            return "Room{" +
+                    "numberOfRoom=" + numberOfRoom +
+                    ", isFree=" + isFree +
+                    ", roomType=" + roomType +
+                    '}';
         }
 
     }
 
     /**
      * Метод бронирования номера
+     * todo: декомпозировать
      */
     private static void bookingRoom(Map<Integer, Room> roomMap) {
 
@@ -65,7 +78,7 @@ public class Hotel {
                     break;
                 else if (inputRoomNumber > roomMap.size())
                     System.out.println("Комнаты с номером " + inputRoomNumber + " не существует. Введите другой номер или нажмите 0 для выхода");
-                else if (room.isFree == FALSE)
+                else if (room.getStatus() == FALSE)
                     System.out.println("К сожалению номер " + inputRoomNumber + " уже занят. Введите другой номер или нажмите 0 для выхода");
                 else {
                     Boolean isThisRoomFree = room.getStatus();
@@ -105,5 +118,6 @@ public class Hotel {
         Random rand = new Random();
         return enumTypes.get(rand.nextInt(enumTypes.size()));
     }
+
 
 }
